@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <title>
+        	Base Line Examples
+        </title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+
+        <link rel="stylesheet" href="css/bootstrap.min.css">        
+        <link rel="stylesheet" href="css/bootstrap-responsive.min.css">
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/graphs.css">
+        <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+    </head>
+    <body>
+        
+        <div id="flot" class="container-fluid">
+        	<div class="row-fluid">
+                <h3 class="text-center">Graph 1 - Basic Techniques</h3>
+                <div id="graph1" class="offset3 span6 eg_graph"></div>    
+            </div>
+            <div class="row-fluid">
+                <h3 class="text-center">Graph 2 - Creating Interaction</h3>
+                <div id="graph2" class="offset3 span6 eg_graph"></div>
+                <div class="pull_right">
+                    Extra Information
+                    <div id="section"></div>
+                </div>  
+            </div> 
+        </div> <!-- /container -->
+
+        <script src="js/vendor/jquery-1.9.1.min.js"></script>
+        <script src="js/vendor/flot/jquery.flot.js"></script> <!-- Need to include the Additional Flot Library -->
+        <script src="js/vendor/flot/jquery.flot.resize.js"></script> <!-- We Utilize the rezise plugin to facilitate a more responsive feel of the graph which is the overall theme of the site framework -->
+        <script src="js/vendor/bootstrap.min.js"></script>
+        <script src="js/main.js"></script>
+        <script src="js/graphs.js"></script>
+    </body>
+</html>
