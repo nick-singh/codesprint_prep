@@ -3,8 +3,8 @@
 
 var express = require("express"), //Express is an external Library must use "npm install express" to access
 	http 	= require("http"),
-	app,
-	port = 80;
+	csv2json= require("csv2json"),
+	app, port = 80;
 
 app = express();
 //Set-up Express Configuration
@@ -23,10 +23,16 @@ app.get("/runtest", function(req,res){ //req - request res - response
 app.get("/worldbank", function(req, res){ //http://nodejs.org/api/http.html#http_http_get_options_callback
 	var url = "http://api.worldbank.org/countries/all/indicators/SP.POP.TOTL?format=json";
 	http.get(url, function(response){
-		var total_data = "";
+		var total_data = ""; // We can use a string because we know that they only information we retrieve 
+		//We set a function to run on data event. This data event is triggered when data is received
+		//It is not guaranteed that data will be retrieved all at once. It is more common that data will
+		// be received in packets of information
 		response.on("data", function(data){
-			total_data += data;
+			total_data += data; // We add the data to the buffer that will store all the data
 		});
+		
+		//When all the data is loaded, the end event is triggered.
+		// At this time we can assume the total_data buffer contains the required information
 		response.on("end", function(){
 			//Using the response from the initial /worldbank request send information back to users
 			res.end(total_data);
@@ -37,18 +43,27 @@ app.get("/worldbank", function(req, res){ //http://nodejs.org/api/http.html#http
 app.get("/devcatt", function(req, res){
 	var url = "http://devca.ciudadanointeligente.org/api/rest/dataset/namdevco";
 	http.get(url, function(response){
-		var total_data = "";
+		var total_data = ""; //Data Buffer
 
-		response.on("data", function(data){
+		response.on("data", function(data){ 
 			total_data += data;
 		});
 
 		response.on("end", function(){
-			res.end(total_data);
+			// res.end(total_data);
+			extract_csv(total_data, res);
 		});
 		
 	});
 });
+
+//This function will request the data from the server
+//It gets the URI from the JSON data that is passed as a parameter
+//Finally it sends the data formatted as json from the csv extracted
+function extract_csv(data, res){
+	
+}
+
 
 //Build a simple Example that pulls developing caribbean data and sends to client
 
