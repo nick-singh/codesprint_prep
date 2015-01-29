@@ -77,6 +77,4 @@ def get_countries():
 		return None
 	
 
-# print get_countries()
-
 	
