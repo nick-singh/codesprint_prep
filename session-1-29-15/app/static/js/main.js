@@ -2,6 +2,7 @@
 
 (function(document, window, $, _){
 
+	var totals = {};
 
 	// function gets all the countries data from the server
 	// and stores it in a jStorage object to use locally
@@ -79,19 +80,41 @@
 	    });
 	}
 
+	function aggregation(obj){		
+		if (obj.Year && obj.QUANTITY_KG) {
+			
+	        if (totals[obj.Year]) {
+	            totals[obj.Year] += obj.QUANTITY_KG;
+	        } else {
+	            totals[obj.Year] = obj.QUANTITY_KG;	         
+	        }
+	    } else {
+	        for (var p in obj) {
+	            aggregation(obj[p]);	            
+	        }
+    	}    	
+	}
+
 
 	// functions generates a graph based on the country selected 
 	function genGraph(str){
 		var quantity = [],
-		year = [];
+		year = [],
+		temp = {};
 		$.each($.jStorage.get('data'),function(index, d){					
 			$.each(JSON.parse(d), function(i, c){					
 				if(c.COUNTRY.search(str) != -1){
-					quantity.push(parseInt(c.QUANTITY_KG));
-					year.push(c.Year);
+					temp['obj'+i] = ({"QUANTITY_KG":parseInt(c.QUANTITY_KG), "Year":c.Year});					
 				}
 			});
 		});				
+		aggregation(temp);
+
+		$.each(totals, function(i, c){
+			quantity.push(parseInt(c));
+			year.push(i);
+		});	
+
 		plot(str, year, quantity);
 	}
 
